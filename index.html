@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora PC Build - SQA</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+        .form-group { margin-bottom: 15px; }
+        select { width: 100%; padding: 8px; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; }
+        #resultado { margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-height: 50px; }
+    </style>
+</head>
+<body>
+
+    <h2>Simulador de Presupuesto PC</h2>
+
+    <div class="form-group">
+        <label>Procesador (CPU):</label>
+        <select id="cpu">
+            <option value="105" data-socket="am4" data-precio="1500">Ryzen 7 5800X (105W - AM4) - 1500 BOB</option>
+            <option value="125" data-socket="lga1700" data-precio="2500">Core i7-13700K (125W - LGA1700) - 2500 BOB</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Placa Base (Motherboard):</label>
+        <select id="mobo">
+            <option data-socket="AM4" data-precio="800">Placa B550M (AM4) - 800 BOB</option>
+            <option data-socket="LGA1700" data-precio="1500">Placa Z790 (LGA1700) - 1500 BOB</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Fuente de Poder (PSU):</label>
+        <select id="psu">
+            <option value="350" data-precio="200">Genérica 350W - 200 BOB</option>
+            <option value="750" data-precio="800">Corsair 750W - 800 BOB</option>
+        </select>
+    </div>
+
+    <button onclick="validarYCalcular()">Calcular y Validar</button>
+
+    <div id="resultado">Esperando acción...</div>
+
+    <script>
+        function validarYCalcular() {
+            const cpu = document.getElementById("cpu");
+            const mobo = document.getElementById("mobo");
+            const psu = document.getElementById("psu");
+
+            // Obtener valores técnicos
+            const cpuWatts = parseInt(cpu.value);
+            const psuWatts = parseInt(psu.value);
+            const cpuSocket = cpu.options[cpu.selectedIndex].getAttribute("data-socket");
+            const moboSocket = mobo.options[mobo.selectedIndex].getAttribute("data-socket");
+            
+            // Obtener precios
+            const totalBOB = parseInt(cpu.options[cpu.selectedIndex].getAttribute("data-precio")) +
+                             parseInt(mobo.options[mobo.selectedIndex].getAttribute("data-precio")) +
+                             parseInt(psu.options[psu.selectedIndex].getAttribute("data-precio"));
+
+            let mensajesError = [];
+
+            // Validación 1: Fuente de poder (+20% de margen)
+            const wattsRequeridos = cpuWatts * 1.2; 
+            if (psuWatts < wattsRequeridos) {
+                mensajesError.push(`Error: Fuente de poder insuficiente. Se requieren mínimo ${wattsRequeridos}W.`);
+            }
+
+            // Validación 2: Compatibilidad de Socket (AQUÍ ESTÁ EL BUG INTENCIONAL)
+            // El programador olvidó que "am4" y "AM4" se leen diferente si no se igualan a mayúsculas.
+            if (cpuSocket !== moboSocket) {
+                mensajesError.push("Incompatibilidad detectada: La placa seleccionada no coincide con el procesador.");
+            }
+
+            // Mostrar resultados
+            const divResultado = document.getElementById("resultado");
+            if (mensajesError.length > 0) {
+                divResultado.innerHTML = "<span class='error'>" + mensajesError.join("<br><br>") + "</span>";
+            } else {
+                divResultado.innerHTML = `<span class='success'>¡Build compatible!</span><br>Costo Total: ${totalBOB} BOB`;
+            }
+        }
+    </script>
+</body>
+</html>
