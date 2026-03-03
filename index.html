@@ -4,141 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora PC Build - SQA</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-        .form-group { margin-bottom: 15px; }
-        select { width: 100%; padding: 8px; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; }
-        button:hover { background-color: #0056b3; }
-        .error { color: red; font-weight: bold; }
-        .success { color: green; font-weight: bold; }
-        .reporte { background-color: #f8f9fa; padding: 15px; border-left: 4px solid #28a745; margin-top: 15px; }
-        #resultado { margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-height: 50px; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h2>Simulador de Presupuesto PC</h2>
+    <div class="contenedor">
+        <h2>Simulador de Presupuesto PC</h2>
 
-    <div class="form-group">
-        <label>Procesador (CPU):</label>
-        <select id="cpu">
-            <option value="65" data-socket="LGA1151" data-precio="800" data-nombre="Intel Core i5 7ma Gen">Intel Core i5 7ma Gen (65W - LGA1151) - 800 BOB</option>
-            <option value="105" data-socket="am4" data-precio="1500" data-nombre="Ryzen 7 5800X">Ryzen 7 5800X (105W - AM4) - 1500 BOB</option>
-        </select>
+        <div class="form-group">
+            <label>Procesador (CPU):</label>
+            <select id="cpu">
+                <option value="65" data-socket="LGA1151" data-precio="800" data-nombre="Intel Core i5-7400">Intel Core i5-7400 (65W - LGA1151) - 800 BOB</option>
+                <option value="125" data-socket="LGA1700" data-precio="2800" data-nombre="Intel Core i7-13700K">Intel Core i7-13700K (125W - LGA1700) - 2800 BOB</option>
+                <option value="65" data-socket="AM4" data-precio="1100" data-nombre="AMD Ryzen 5 5600X">AMD Ryzen 5 5600X (65W - AM4) - 1100 BOB</option>
+                <option value="105" data-socket="am4" data-precio="1500" data-nombre="AMD Ryzen 7 5800X">AMD Ryzen 7 5800X (105W - AM4) - 1500 BOB</option>
+                <option value="120" data-socket="AM5" data-precio="2200" data-nombre="AMD Ryzen 5 7600X">AMD Ryzen 5 7600X (120W - AM5) - 2200 BOB</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Placa Base (Motherboard):</label>
+            <select id="mobo">
+                <option data-socket="LGA1151" data-ram="DDR4" data-precio="600" data-nombre="Asus B150-PLUS">Asus B150-PLUS (LGA1151 - DDR4) - 600 BOB</option>
+                <option data-socket="LGA1700" data-ram="DDR5" data-precio="1500" data-nombre="MSI PRO Z790-P">MSI PRO Z790-P (LGA1700 - DDR5) - 1500 BOB</option>
+                <option data-socket="AM4" data-ram="DDR4" data-precio="800" data-nombre="Gigabyte B550M DS3H">Gigabyte B550M DS3H (AM4 - DDR4) - 800 BOB</option>
+                <option data-socket="AM5" data-ram="DDR5" data-precio="1800" data-nombre="Asus ROG Strix B650E">Asus ROG Strix B650E (AM5 - DDR5) - 1800 BOB</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Memoria RAM:</label>
+            <select id="ram">
+                <option data-tipo="DDR4" data-precio="250" data-nombre="16GB RAM DDR4 3200MHz">16GB RAM DDR4 3200MHz - 250 BOB</option>
+                <option data-tipo="DDR4" data-precio="450" data-nombre="32GB RAM DDR4 3600MHz">32GB RAM DDR4 3600MHz - 450 BOB</option>
+                <option data-tipo="ddr5" data-precio="650" data-nombre="16GB RAM DDR5 5200MHz">16GB RAM DDR5 5200MHz - 650 BOB</option>
+                <option data-tipo="DDR5" data-precio="1100" data-nombre="32GB RAM DDR5 6000MHz">32GB RAM DDR5 6000MHz - 1100 BOB</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tarjeta Gráfica (GPU):</label>
+            <select id="gpu">
+                <option value="75" data-precio="1200" data-nombre="NVIDIA GTX 1650">NVIDIA GTX 1650 (75W) - 1200 BOB</option>
+                <option value="170" data-precio="2500" data-nombre="NVIDIA RTX 3060 12GB">NVIDIA RTX 3060 12GB (170W) - 2500 BOB</option>
+                <option value="230" data-precio="3200" data-nombre="AMD Radeon RX 6700 XT">AMD Radeon RX 6700 XT (230W) - 3200 BOB</option>
+                <option value="320" data-precio="8500" data-nombre="NVIDIA RTX 4080 16GB">NVIDIA RTX 4080 16GB (320W) - 8500 BOB</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fuente de Poder (PSU):</label>
+            <select id="psu">
+                <option value="200" data-precio="200" data-nombre="Genérica 200W">Genérica 200W - 200 BOB</option>
+                <option value="500" data-precio="350" data-nombre="EVGA 500W 80 Plus">EVGA 500W 80 Plus - 350 BOB</option>
+                <option value="750" data-precio="800" data-nombre="Corsair CX750M">Corsair CX750M 750W - 800 BOB</option>
+                <option value="1000" data-precio="1400" data-nombre="Seasonic Focus 1000W">Seasonic Focus 1000W 80+ Gold - 1400 BOB</option>
+            </select>
+        </div>
+
+        <button onclick="validarYCalcular()">Calcular y Validar Ensamblaje</button>
+
+        <div id="resultado">Esperando acción...</div>
     </div>
 
-    <div class="form-group">
-        <label>Placa Base (Motherboard):</label>
-        <select id="mobo">
-            <option data-socket="LGA1151" data-ram="DDR4" data-precio="600" data-nombre="Asus B150-PLUS">Asus B150-PLUS (LGA1151 - DDR4) - 600 BOB</option>
-            <option data-socket="AM4" data-ram="DDR4" data-precio="800" data-nombre="Placa B550M">Placa B550M (AM4 - DDR4) - 800 BOB</option>
-            <option data-socket="LGA1700" data-ram="DDR5" data-precio="1500" data-nombre="Placa Z790">Placa Z790 (LGA1700 - DDR5) - 1500 BOB</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Memoria RAM:</label>
-        <select id="ram">
-            <option data-tipo="DDR4" data-precio="400" data-nombre="24GB RAM DDR4">24GB RAM DDR4 - 400 BOB</option>
-            <option data-tipo="ddr5" data-precio="1000" data-nombre="32GB RAM DDR5">32GB RAM DDR5 - 1000 BOB</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Tarjeta Gráfica (GPU):</label>
-        <select id="gpu">
-            <option value="75" data-precio="1200" data-nombre="NVIDIA GTX 1650">NVIDIA GTX 1650 (75W) - 1200 BOB</option>
-            <option value="170" data-precio="2500" data-nombre="NVIDIA RTX 3060">NVIDIA RTX 3060 (170W) - 2500 BOB</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Fuente de Poder (PSU):</label>
-        <select id="psu">
-            <option value="200" data-precio="200" data-nombre="Genérica 200">Genérica 200W - 200 BOB</option>
-            <option value="750" data-precio="800" data-nombre="Corsair 750W">Corsair 750W - 800 BOB</option>
-        </select>
-    </div>
-
-    <button onclick="validarYCalcular()">Calcular y Validar Ensamblaje</button>
-
-    <div id="resultado">Esperando acción...</div>
-
-    <script>
-        function validarYCalcular() {
-            const cpu = document.getElementById("cpu");
-            const mobo = document.getElementById("mobo");
-            const ram = document.getElementById("ram");
-            const gpu = document.getElementById("gpu");
-            const psu = document.getElementById("psu");
-
-            // Obtener valores técnicos
-            const cpuWatts = parseInt(cpu.value);
-            const gpuWatts = parseInt(gpu.value);
-            const psuWatts = parseInt(psu.value);
-            
-            const cpuSocket = cpu.options[cpu.selectedIndex].getAttribute("data-socket");
-            const moboSocket = mobo.options[mobo.selectedIndex].getAttribute("data-socket");
-            
-            const moboRamType = mobo.options[mobo.selectedIndex].getAttribute("data-ram");
-            const ramType = ram.options[ram.selectedIndex].getAttribute("data-tipo");
-
-            // Obtener nombres para el reporte
-            const nombreCpu = cpu.options[cpu.selectedIndex].getAttribute("data-nombre");
-            const nombreMobo = mobo.options[mobo.selectedIndex].getAttribute("data-nombre");
-            const nombreRam = ram.options[ram.selectedIndex].getAttribute("data-nombre");
-            const nombreGpu = gpu.options[gpu.selectedIndex].getAttribute("data-nombre");
-            const nombrePsu = psu.options[psu.selectedIndex].getAttribute("data-nombre");
-
-            // Obtener precios
-            // BUG 1: Cálculo del presupuesto total
-            const totalBOB = parseInt(cpu.options[cpu.selectedIndex].getAttribute("data-precio")) +
-                             parseInt(mobo.options[mobo.selectedIndex].getAttribute("data-precio")) +
-                             parseInt(gpu.options[gpu.selectedIndex].getAttribute("data-precio")) +
-                             parseInt(psu.options[psu.selectedIndex].getAttribute("data-precio"));
-
-            let mensajesError = [];
-
-            // Funcionalidad 1: Compatibilidad de Socket
-            // BUG 2: Validación estricta de mayúsculas/minúsculas
-            if (cpuSocket !== moboSocket) {
-                mensajesError.push("Incompatibilidad detectada: El socket de la placa base no coincide con el procesador.");
-            }
-
-            // Funcionalidad 2: Compatibilidad de RAM
-            // BUG 3: Validación estricta de mayúsculas/minúsculas
-            if (moboRamType !== ramType) {
-                mensajesError.push("Incompatibilidad detectada: El tipo de memoria RAM no es soportado por la placa base.");
-            }
-
-            // Funcionalidad 3: Validación de Energía
-            // BUG 4: Lógica matemática incorrecta en el margen de seguridad
-            const wattsRequeridos = (cpuWatts * 1.2) + gpuWatts; 
-            if (psuWatts < wattsRequeridos) {
-                mensajesError.push(`Error de Energía: Fuente de poder insuficiente. Se estiman al menos ${Math.ceil(wattsRequeridos)}W.`);
-            }
-
-            // Funcionalidad 4 y 5: Renderizado UI y Generación de Reporte
-            const divResultado = document.getElementById("resultado");
-            if (mensajesError.length > 0) {
-                divResultado.innerHTML = "<span class='error'>" + mensajesError.join("<br><br>") + "</span>";
-            } else {
-                // BUG 5: Variable mal escrita en la UI
-                divResultado.innerHTML = `
-                    <span class='success'>¡Ensamblaje 100% Compatible!</span>
-                    <div class='reporte'>
-                        <strong>Resumen del Equipo:</strong><br>
-                        - Procesador: ${nombreCpu}<br>
-                        - Placa Base: ${typeof nomreMobo !== 'undefined' ? nomreMobo : 'Indefinido (Error de UI)'}<br>
-                        - Memoria: ${nombreRam}<br>
-                        - Gráfica: ${nombreGpu}<br>
-                        - Fuente: ${nombrePsu}<br><br>
-                        <strong>Costo Total Estimado:</strong> ${totalBOB} BOB
-                    </div>
-                `;
-            }
-        }
-    </script>
+    <script src="calculadora.js"></script>
 </body>
 </html>
